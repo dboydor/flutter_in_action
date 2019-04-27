@@ -6,18 +6,19 @@ import 'package:backend/services/todos.dart';
 class TodoController {
   final Services services;
   List<Todo> todos;
+  var counter = CompletedTodoCounter();
 
   StreamController<bool> onSyncController = new StreamController();
+
   Stream<bool> get onSync => onSyncController.stream;
 
   TodoController(this.services);
 
   Future<List<Todo>> fetchTodos() async {
+    counter.resetCounter();
     onSyncController.add(true);
     todos = await services.getTodos();
-    new Timer(new Duration(seconds: 2), () {
-      onSyncController.add(false);
-    });
+    onSyncController.add(false);
     return todos;
   }
 
@@ -25,4 +26,24 @@ class TodoController {
     todo.completed = isCompleted;
     return await services.updateTodo(todo);
   }
+
+  int getCompletedTodos() {
+    counter.resetCounter();
+    todos?.forEach((Todo t) {
+      if (t.completed) {
+        counter.increaseCounter();
+      }
+    });
+    return counter.completed;
+  }
+}
+
+class CompletedTodoCounter {
+  int completed = 0;
+
+  void increaseCounter() => completed++;
+
+  void decreaseCounter() => completed--;
+
+  void resetCounter() => completed = 0;
 }
