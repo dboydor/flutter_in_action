@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:backend/models/todo.dart';
-import 'package:backend/services/todos.dart';
+import 'package:shared/src/services/services_base.dart';
+import 'package:shared/src/todo_model.dart';
 
 class TodoController {
   final Services services;

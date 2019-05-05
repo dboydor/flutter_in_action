@@ -1,11 +1,14 @@
-import 'package:backend/controllers/todo_controller.dart';
-import 'package:backend/services/todos.dart';
+
 import 'package:backend/todo_page.dart';
 import 'package:flutter/material.dart';
+import 'package:shared/shared.dart';
+
+import 'firestore/services.dart';
+
 
 void main() async {
-  var services = new HttpServices();
-//  var services = new FirebaseServices();
+//  var services = new HttpServices();
+  var services = new FirebaseServices();
   var controller = new TodoController(services);
 
   runApp(TodoApp(controller: controller));

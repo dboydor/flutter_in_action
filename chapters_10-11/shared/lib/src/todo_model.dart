@@ -1,7 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'todo.g.dart';
+part 'todo_model.g.dart';
 
 @JsonSerializable()
 class Todo {
@@ -24,13 +23,13 @@ class AllTodos {
   AllTodos(this.todos);
 
   factory AllTodos.fromJson(List<dynamic> json) {
-      List<Todo> todos = new List<Todo>();
-      todos = json.map((i) => Todo.fromJson(i)).toList();
-      return new AllTodos(todos);
+    List<Todo> todos = new List<Todo>();
+    todos = json.map((i) => Todo.fromJson(i)).toList();
+    return new AllTodos(todos);
   }
 
-  factory AllTodos.fromSnapshot(QuerySnapshot s) {
-    List<Todo> todos = s.documents.map((DocumentSnapshot ds) {
+  factory AllTodos.fromSnapshot(dynamic s) {
+    List<Todo> todos = s.documents.map((dynamic ds) {
       return new Todo.fromJson(ds.data);
     }).toList();
     return AllTodos(todos);
