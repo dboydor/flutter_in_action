@@ -14,7 +14,7 @@ class ForecastController {
     var helper = new WeatherDataHelper();
     forecast = helper.generateTenDayForecast(city);
     selectedDay = Forecast.getSelectedDayForecast(
-        forecast, DateTime(_today));
+        forecast, DateTime.fromMillisecondsSinceEpoch(_today.millisecondsSinceEpoch));
 
     selectedHourlyTemperature = ForecastDay.getHourSelection(
         selectedDay, DateTime.now().toLocal().hour);
